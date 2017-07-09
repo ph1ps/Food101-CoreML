@@ -5,6 +5,7 @@
     </device>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13104.14"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -27,19 +28,30 @@
                                     <constraint firstAttribute="width" constant="299" id="ncl-ZU-okw"/>
                                 </constraints>
                             </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AbQ-lV-fJL">
+                                <rect key="frame" x="16" y="490" width="343" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstAttribute="trailingMargin" secondItem="AbQ-lV-fJL" secondAttribute="trailing" id="5lb-kX-fyP"/>
+                            <constraint firstItem="AbQ-lV-fJL" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="BCd-5e-QmE"/>
                             <constraint firstItem="wvS-GK-UEI" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="Eff-C8-wyP"/>
                             <constraint firstItem="wvS-GK-UEI" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="PG0-6U-jaF"/>
+                            <constraint firstItem="AbQ-lV-fJL" firstAttribute="top" secondItem="wvS-GK-UEI" secondAttribute="bottom" constant="7.5" id="q7X-JU-dGd"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="imageView" destination="wvS-GK-UEI" id="ywf-rI-zDG"/>
+                        <outlet property="percentage" destination="AbQ-lV-fJL" id="5dw-HN-5sj"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="117.59999999999999" y="123.68815592203899"/>
         </scene>
     </scenes>
 </document>

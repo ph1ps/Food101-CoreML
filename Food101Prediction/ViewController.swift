@@ -64,13 +64,14 @@ extension Food101 {
 class ViewController: UIViewController {
     
     @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var percentage: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         let model = Food101()
         
-        guard let input = model.preprocess(image: #imageLiteral(resourceName: "ribs")) else {
+        guard let input = model.preprocess(image: #imageLiteral(resourceName: "applepie")) else {
             print("preprocessing failed")
             return
         }
@@ -80,9 +81,11 @@ class ViewController: UIViewController {
             return
         }
         
-        print(result.classLabel)
-        print(result.foodConfidence)
+        let confidence = result.foodConfidence["\(result.classLabel)"]! * 100.0
+        let converted = String(format: "%.3f", confidence)
         
+        imageView.image = #imageLiteral(resourceName: "applepie")
+        percentage.text = "\(result.classLabel) - \(converted) %"
     }
 
     override func didReceiveMemoryWarning() {
