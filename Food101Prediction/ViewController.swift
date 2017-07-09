@@ -70,8 +70,9 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         
         let model = Food101()
+        let image = #imageLiteral(resourceName: "lobsterroll")
         
-        guard let input = model.preprocess(image: #imageLiteral(resourceName: "applepie")) else {
+        guard let input = model.preprocess(image: image) else {
             print("preprocessing failed")
             return
         }
@@ -82,9 +83,9 @@ class ViewController: UIViewController {
         }
         
         let confidence = result.foodConfidence["\(result.classLabel)"]! * 100.0
-        let converted = String(format: "%.3f", confidence)
+        let converted = String(format: "%.2f", confidence)
         
-        imageView.image = #imageLiteral(resourceName: "applepie")
+        imageView.image = image
         percentage.text = "\(result.classLabel) - \(converted) %"
     }
 
