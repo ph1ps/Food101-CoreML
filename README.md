@@ -9,6 +9,17 @@ I included the necessary preprocessing as an extension in my `ViewController.swi
 
 For further information about this dataset and how it was trained see my `food101.py` in the `Convert` directory or visit [Food101 Keras](https://github.com/stratospark/food-101-keras)
 
+### Retrain on your own
+I've provided all scripts for the reproduction in the `Convert` directory. Make sure you call the `downloads_pretrained.sh` script first since you need the pretrained Keras model for conversion.
+
+**TL;DR**
+
+* `$ cd Convert`
+* `$ ./download_pretrained.sh`
+* `$ python food101.py`
+
+If you are getting an error saying something with: `Fatal Python error: PyThreadState_Get: no current thread` then you need to do what **@hollance** did in [his repo](https://github.com/hollance/MobileNet-CoreML#converting-the-weights) (create a virtualenv). 
+
 ### Examples
 
 <img src="lobster-screen.png" align="left" width="160">
