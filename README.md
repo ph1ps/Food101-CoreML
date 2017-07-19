@@ -9,6 +9,9 @@ I included the necessary preprocessing as an extension in my `ViewController.swi
 
 For further information about this dataset and how it was trained see my `food101.py` in the `Convert` directory or visit [Food101 Keras](https://github.com/stratospark/food-101-keras)
 
+### Download
+The model is not included in this repository since it would slow down git. I uploaded it on Google Drive, there you have to [download](https://drive.google.com/open?id=0B5TjkH3njRqnVjBPZGRZbkNITjA) it and drag it into the Xcode project.
+
 ### Retrain on your own
 I've provided all scripts for the reproduction in the `Convert` directory. Make sure you call the `downloads_pretrained.sh` script first since you need the pretrained Keras model for conversion.
 
