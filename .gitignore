@@ -1,7 +1,11 @@
 # Xcode
 #
 # gitignore contributors: remember to update Global/Xcode.gitignore, Objective-C.gitignore & Swift.gitignore
+
 .DS_Store
+*.mlmodel
+Convert/env/
+*.hdf5
 
 ## Build generated
 build/

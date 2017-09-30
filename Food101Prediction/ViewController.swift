@@ -10,55 +10,46 @@ import UIKit
 import CoreML
 
 extension UIImage {
-    
-    func resize(to newSize: CGSize) -> UIImage {
-        UIGraphicsBeginImageContextWithOptions(CGSize(width: newSize.width, height: newSize.height), true, 1.0)
-        self.draw(in: CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height))
-        let resizedImage = UIGraphicsGetImageFromCurrentImageContext()!
-        UIGraphicsEndImageContext()
-        
-        return resizedImage
-    }
-    
-    func pixelData() -> [UInt8]? {
-        let dataSize = size.width * size.height * 4
-        var pixelData = [UInt8](repeating: 0, count: Int(dataSize))
-        let colorSpace = CGColorSpaceCreateDeviceRGB()
-        let context = CGContext(data: &pixelData, width: Int(size.width), height: Int(size.height), bitsPerComponent: 8, bytesPerRow: 4 * Int(size.width), space: colorSpace, bitmapInfo: CGImageAlphaInfo.noneSkipLast.rawValue)
-        
-        guard let cgImage = self.cgImage else { return nil }
-        context?.draw(cgImage, in: CGRect(x: 0, y: 0, width: size.width, height: size.height))
-        
-        return pixelData
-    }
-}
 
-extension Food101 {
-    
-    func preprocess(image: UIImage) -> MLMultiArray? {
-        let size = CGSize(width: 299, height: 299)
+    func resize(to newSize: CGSize) -> UIImage? {
+
+        guard self.size != newSize else { return self }
         
+        UIGraphicsBeginImageContextWithOptions(newSize, false, 0.0)
+        self.draw(in: CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height))
         
-        guard let pixels = image.resize(to: size).pixelData()?.map({ (Double($0) / 255.0 - 0.5) * 2 }) else {
-            return nil
-        }
-        
-        guard let array = try? MLMultiArray(shape: [3, 299, 299], dataType: .double) else {
-            return nil
-        }
-        
-        let r = pixels.enumerated().filter { $0.offset % 4 == 0 }.map { $0.element }
-        let g = pixels.enumerated().filter { $0.offset % 4 == 1 }.map { $0.element }
-        let b = pixels.enumerated().filter { $0.offset % 4 == 2 }.map { $0.element }
-        
-        let combination = r + g + b
-        for (index, element) in combination.enumerated() {
-            array[index] = NSNumber(value: element)
-        }
-        
-        return array
+        defer { UIGraphicsEndImageContext() }
+        return UIGraphicsGetImageFromCurrentImageContext()
     }
     
+    func pixelBuffer() -> CVPixelBuffer? {
+        
+        let width = Int(self.size.width)
+        let height = Int(self.size.height)
+        
+        let attrs = [kCVPixelBufferCGImageCompatibilityKey: kCFBooleanTrue, kCVPixelBufferCGBitmapContextCompatibilityKey: kCFBooleanTrue] as CFDictionary
+        var pixelBuffer: CVPixelBuffer?
+        let status = CVPixelBufferCreate(kCFAllocatorDefault, width, height, kCVPixelFormatType_32ARGB, attrs, &pixelBuffer)
+        guard status == kCVReturnSuccess else {
+            return nil
+        }
+        
+        CVPixelBufferLockBaseAddress(pixelBuffer!, CVPixelBufferLockFlags(rawValue: 0))
+        let pixelData = CVPixelBufferGetBaseAddress(pixelBuffer!)
+        
+        let rgbColorSpace = CGColorSpaceCreateDeviceRGB()
+        let context = CGContext(data: pixelData, width: width, height: height, bitsPerComponent: 8, bytesPerRow: CVPixelBufferGetBytesPerRow(pixelBuffer!), space: rgbColorSpace, bitmapInfo: CGImageAlphaInfo.noneSkipFirst.rawValue)
+        
+        context?.translateBy(x: 0, y: CGFloat(height))
+        context?.scaleBy(x: 1.0, y: -1.0)
+        
+        UIGraphicsPushContext(context!)
+        self.draw(in: CGRect(x: 0, y: 0, width: width, height: height))
+        UIGraphicsPopContext()
+        CVPixelBufferUnlockBaseAddress(pixelBuffer!, CVPixelBufferLockFlags(rawValue: 0))
+        
+        return pixelBuffer
+    }
 }
 
 class ViewController: UIViewController {
@@ -70,16 +61,15 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         
         let model = Food101()
-        let image = #imageLiteral(resourceName: "lobsterroll")
-        
-        guard let input = model.preprocess(image: image) else {
-            print("preprocessing failed")
-            return
+        let size = CGSize(width: 299, height: 299)
+        let image = #imageLiteral(resourceName: "applepie")
+
+        guard let buffer = image.resize(to: size)?.pixelBuffer() else {
+            fatalError("Scaling or converting to pixel buffer failed!")
         }
         
-        guard let result = try? model.prediction(image: input) else {
-            print("prediction failed")
-            return
+        guard let result = try? model.prediction(image: buffer) else {
+            fatalError("Prediction failed!")
         }
         
         let confidence = result.foodConfidence["\(result.classLabel)"]! * 100.0
