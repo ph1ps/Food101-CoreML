@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -22,26 +22,33 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="wvS-GK-UEI">
-                                <rect key="frame" x="37.5" y="183.5" width="299" height="299"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="299" id="kgo-rP-1UZ"/>
-                                    <constraint firstAttribute="width" constant="299" id="ncl-ZU-okw"/>
-                                </constraints>
+                                <rect key="frame" x="38" y="184" width="299" height="299"/>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AbQ-lV-fJL">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Prediction" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AbQ-lV-fJL">
                                 <rect key="frame" x="16" y="490" width="343" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KGj-k5-WpV">
+                                <rect key="frame" x="107" y="617" width="161" height="30"/>
+                                <state key="normal" title="Select an Image to Test"/>
+                                <connections>
+                                    <action selector="buttonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ggg-hn-h0y"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstAttribute="trailingMargin" secondItem="AbQ-lV-fJL" secondAttribute="trailing" id="5lb-kX-fyP"/>
-                            <constraint firstItem="AbQ-lV-fJL" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="BCd-5e-QmE"/>
-                            <constraint firstItem="wvS-GK-UEI" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="Eff-C8-wyP"/>
-                            <constraint firstItem="wvS-GK-UEI" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="PG0-6U-jaF"/>
-                            <constraint firstItem="AbQ-lV-fJL" firstAttribute="top" secondItem="wvS-GK-UEI" secondAttribute="bottom" constant="7.5" id="q7X-JU-dGd"/>
+                            <constraint firstItem="AbQ-lV-fJL" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="3ml-7i-aHk"/>
+                            <constraint firstItem="AbQ-lV-fJL" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="4Wg-KI-RKh"/>
+                            <constraint firstAttribute="bottom" secondItem="KGj-k5-WpV" secondAttribute="bottom" constant="20" symbolic="YES" id="8ei-fv-I57"/>
+                            <constraint firstItem="AbQ-lV-fJL" firstAttribute="top" secondItem="wvS-GK-UEI" secondAttribute="bottom" constant="7" id="DDA-eR-KH4"/>
+                            <constraint firstItem="wvS-GK-UEI" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="22" id="FoT-dF-mOy"/>
+                            <constraint firstItem="wvS-GK-UEI" firstAttribute="centerX" secondItem="AbQ-lV-fJL" secondAttribute="centerX" id="Jcv-z1-3HZ"/>
+                            <constraint firstItem="wvS-GK-UEI" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="164" id="bU2-vh-C9B"/>
+                            <constraint firstItem="AbQ-lV-fJL" firstAttribute="centerX" secondItem="KGj-k5-WpV" secondAttribute="centerX" id="kDP-Q0-HDa"/>
+                            <constraint firstItem="wvS-GK-UEI" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="tjm-zm-Vc8"/>
                         </constraints>
                     </view>
                     <connections>
