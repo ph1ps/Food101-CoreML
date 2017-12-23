@@ -52,7 +52,7 @@ extension UIImage {
     }
 }
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var percentage: UILabel!
@@ -60,10 +60,43 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        percentage.text = ""
+//        imageView.isUserInteractionEnabled = true
+//        let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTapImage))
+//        imageView.addGestureRecognizer(gestureRecognizer)
+        
+    }
+    
+    @IBAction func buttonPressed(_ sender: Any) {
+        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        let imagePickerView = UIImagePickerController()
+        imagePickerView.delegate = self
+        alert.addAction(UIAlertAction(title: "Choose Image", style: .default, handler: { (alert) in
+            imagePickerView.sourceType = .photoLibrary
+            self.present(imagePickerView, animated: true, completion: nil)
+        }))
+        alert.addAction(UIAlertAction(title: "Take Image", style: .default, handler: { (alert) in
+            imagePickerView.sourceType = .camera
+            self.present(imagePickerView, animated: true, completion: nil)
+        }))
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        let image = info["UIImagePickerControllerOriginalImage"] as! UIImage
+        processImage(image)
+        dismiss(animated: true, completion: nil)
+    }
+    
+    func processImage(_ image: UIImage) {
         let model = Food101()
         let size = CGSize(width: 299, height: 299)
-        let image = #imageLiteral(resourceName: "applepie")
-
+        
         guard let buffer = image.resize(to: size)?.pixelBuffer() else {
             fatalError("Scaling or converting to pixel buffer failed!")
         }
